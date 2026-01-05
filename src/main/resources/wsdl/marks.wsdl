@@ -1,0 +1,59 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.soap.ds.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MarksService" targetNamespace="http://service.soap.ds.com/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.soap.ds.com/" elementFormDefault="unqualified" targetNamespace="http://service.soap.ds.com/" version="1.0">
+            <xs:element name="calculate" type="tns:calculate"/>
+            <xs:element name="calculateResponse" type="tns:calculateResponse"/>
+            <xs:complexType name="calculate">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int"/>
+                    <xs:element name="arg1" type="xs:int"/>
+                    <xs:element name="arg2" type="xs:int"/>
+                    <xs:element name="arg3" type="xs:int"/>
+                    <xs:element name="arg4" type="xs:int"/>
+                    <xs:element name="arg5" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="calculateResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:marksResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="marksResponse">
+                <xs:sequence>
+                    <xs:element name="percentage" type="xs:float"/>
+                    <xs:element minOccurs="0" name="success" type="xs:string"/>
+                    <xs:element name="total" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="calculate">
+        <wsdl:part element="tns:calculate" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="calculateResponse">
+        <wsdl:part element="tns:calculateResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="MarksServiceImpl">
+        <wsdl:operation name="calculate">
+            <wsdl:input message="tns:calculate" name="calculate"> </wsdl:input>
+            <wsdl:output message="tns:calculateResponse" name="calculateResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MarksServiceSoapBinding" type="tns:MarksServiceImpl">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="calculate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="calculate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="calculateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="MarksService">
+        <wsdl:port binding="tns:MarksServiceSoapBinding" name="MarksServiceImplPort">
+            <soap:address location="http://localhost:9595/services/marks"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
